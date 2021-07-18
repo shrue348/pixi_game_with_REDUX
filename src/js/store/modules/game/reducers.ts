@@ -6,9 +6,7 @@ const initialState: any[] = [];
 
 const gameReducer = createReducer( initialState )( {
   [ types.UPDATE_SCORE ]: ( state: any, action: types.UpdateScoreAction) => {
-    return [
-      ...action.payload
-    ];
+    return action.payload;
   },
 } );
 

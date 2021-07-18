@@ -15,10 +15,10 @@ export default class Engine {
   private scenes: SceneManager;
   private log: HTMLElement;
   private keyboard: typeof Keyboard;
-  private store: Store<any>;
-
+  
   public app: PIXI.Application;
   public controller: IController;
+  public store: Store<any>;
   public time: number;
 
   shaderCode: string;

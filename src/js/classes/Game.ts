@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Engine from '../classes/Engine';
 import { fastFloor } from '../helper/helper';
+import { updateScore as updateStateScore } from '../store/modules/game/actions';
 import Apple from './Apple';
 import Player from './Player';
 
@@ -70,15 +71,15 @@ export default class Game extends PIXI.Container {
     this.view.addChild(this.player);
 
 
-
-
-    
   };
 
   private updateScore (score?: number) {
     if (score || score === 0) this.score = score;
     else this.score += 1;
 
+    this.engine.store.dispatch(updateStateScore({
+      score: this.score,
+    }));
     this.scoreText.text = this.score.toString();
   }
 
@@ -108,7 +109,6 @@ export default class Game extends PIXI.Container {
         this.player.draw();
         this.apple.draw();
         this.scoreText.text = this.score.toString();
-
 
         if (this.player.XX === this.apple.XX && this.player.YY === this.apple.YY) {
           this.updateScore();
