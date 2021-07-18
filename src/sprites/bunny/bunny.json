@@ -1,0 +1,52 @@
+{"frames": {
+
+"Fall.png":
+{
+	"frame": {"x":0,"y":0,"w":34,"h":44},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":34,"h":44},
+	"sourceSize": {"w":34,"h":44}
+},
+"Hit.png":
+{
+	"frame": {"x":34,"y":0,"w":170,"h":44},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":170,"h":44},
+	"sourceSize": {"w":170,"h":44}
+},
+"Idle.png":
+{
+	"frame": {"x":204,"y":0,"w":272,"h":44},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":272,"h":44},
+	"sourceSize": {"w":272,"h":44}
+},
+"Jump.png":
+{
+	"frame": {"x":476,"y":0,"w":34,"h":44},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":34,"h":44},
+	"sourceSize": {"w":34,"h":44}
+},
+"Run.png":
+{
+	"frame": {"x":510,"y":0,"w":408,"h":44},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":408,"h":44},
+	"sourceSize": {"w":408,"h":44}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "bunny.png",
+	"format": "RGBA8888",
+	"size": {"w":918,"h":44},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ee90df5e594af730e263968888f61aed:e279a2a4df1a58a7250c80d4de58e3d2:8cd39669a6554f33ec81b353c76b4981$"
+}
+}

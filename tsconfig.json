@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "module": "es6",
+    "target": "es5",
+    "allowJs": false,
+    "typeRoots" : ["node_modules/pixi.js"],
+    "types": ["pixi.js"]
+  },
+  "exclude": [
+    "node_modules",
+    "vendor"
+  ]
+}
