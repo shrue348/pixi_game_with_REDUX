@@ -21,7 +21,6 @@ export default class Apple extends PIXI.Container {
     this.height = this.game.cellHeight;
 
     const graphics = new PIXI.Graphics();
-
     graphics.beginFill(0xff0000);
     graphics.drawRect(this.x, this.y, this.game.cellWidth, this.game.cellHeight);
     graphics.endFill();
@@ -34,7 +33,14 @@ export default class Apple extends PIXI.Container {
   }
 
   public setNewCoords() {
-    this.XX = randomInt(0, this.game.cellCount - 1);
-    this.YY = randomInt(0, this.game.cellCount - 1);
+    do {
+      this.XX = randomInt(0, this.game.cellCount - 1);
+      this.YY = randomInt(0, this.game.cellCount - 1);
+    } while (
+      this.game.player.tailCoords.some((el) => (
+        el[0] === this.XX
+        && el[1] === this.YY
+      ))
+    )
   }
 };

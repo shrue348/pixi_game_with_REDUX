@@ -8,8 +8,9 @@ import Player from './Player';
 export default class Game extends PIXI.Container {
   private engine: Engine;
   private view: PIXI.Container;
-  private player: Player;
-  private apple: Apple;
+
+  public player: Player;
+  public apple: Apple;
   
   private gameSpeed: number;
   private time: number;
@@ -69,8 +70,6 @@ export default class Game extends PIXI.Container {
 
     this.view.addChild(this.apple);
     this.view.addChild(this.player);
-
-
   };
 
   private updateScore (score?: number) {
