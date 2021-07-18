@@ -16,6 +16,10 @@ interface SetConstructor {
 }
 declare var Set: SetConstructor;
 
+interface Window {
+  __STORE__: IInitialState;
+}
+
 interface IGameState {
   score: number;
 } 
@@ -24,7 +28,9 @@ interface IInitialState {
   game: IGameState,
 }
 
-interface Window {
-  __STORE__: IInitialState;
+interface IGameLevel {
+  count: number,
+  gameSpeed: number,
+  scoresNeed: number,
+  countBricks: number,
 }
-

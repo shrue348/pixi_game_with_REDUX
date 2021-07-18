@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import Game from './Game';
+import Game from '../game/Game';
 import Tail from './Tail';
 
 export default class Player extends PIXI.Container {

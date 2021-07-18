@@ -1,14 +1,13 @@
 import * as PIXI from 'pixi.js';
 import { Scene } from 'pixi-scenes';
 import Button from '../classes/Button';
-import Player from '../classes/Player';
 import Engine from '../classes/Engine';
-import Game from '../classes/Game';
+import Game from '../game/Game';
 
 export default class GameScene extends Scene {
   private engine: Engine;
   private game: Game;
-  private score: PIXI.Text;
+  private scoreText: PIXI.Text;
 
   private restartBtn: Button;
   private backBtn: Button;
@@ -26,7 +25,16 @@ export default class GameScene extends Scene {
   }
 
   public init(): void {
+    this.engine.store.subscribe(() => this.updateScore(this.engine.store.getState()))
     this.addChild(this.game);
+
+    this.scoreText = new PIXI.Text('0', {
+      fill: '#fff',
+      fontSize: 82,
+    });
+    this.scoreText.x = 10;
+    this.scoreText.y = 10;
+    this.addChild(this.scoreText);
 
     this.backBtn = new Button({
       texture: this.app.loader.resources['button_small'].texture,
@@ -104,6 +112,10 @@ export default class GameScene extends Scene {
     });
     this.addChild(this.upBtn);
 
+  }
+
+  public updateScore(state: IInitialState) {
+    this.scoreText.text = state.game.score.toString();
   }
 
   public start(): void {

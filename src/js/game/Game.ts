@@ -2,8 +2,9 @@ import * as PIXI from 'pixi.js';
 import Engine from '../classes/Engine';
 import { fastFloor } from '../helper/helper';
 import { updateScore as updateStateScore } from '../store/modules/game/actions';
-import Apple from './Apple';
-import Player from './Player';
+import Apple from '../classes/Apple';
+import Brick from '../classes/Brick';
+import Player from '../classes/Player';
 
 export default class Game extends PIXI.Container {
   private engine: Engine;
@@ -11,11 +12,11 @@ export default class Game extends PIXI.Container {
 
   public player: Player;
   public apple: Apple;
+  public bricks: Brick[];
   
   private gameSpeed: number;
   private time: number;
   public score: number;
-  private scoreText: PIXI.Text;
 
   public cellCount: number;
   public cellWidth: number;
@@ -50,14 +51,7 @@ export default class Game extends PIXI.Container {
     background.endFill();
     this.view.addChild(background);
 
-    this.scoreText = new PIXI.Text('0', {
-      fill: '#fff',
-      fontSize: 82,
-    });
-    this.scoreText.x = 10;
-    this.scoreText.y = 10;
-    // this.scoreText.anchor.set(0.5);
-    this.addChild(this.scoreText);
+
 
     this.cellCount = 23;
     this.cellWidth = this.engine.app.screen.width / this.cellCount;
@@ -70,6 +64,7 @@ export default class Game extends PIXI.Container {
 
     this.view.addChild(this.apple);
     this.view.addChild(this.player);
+    this.view.addChild(new Brick(this));
   };
 
   private updateScore (score?: number) {
@@ -79,7 +74,6 @@ export default class Game extends PIXI.Container {
     this.engine.store.dispatch(updateStateScore({
       score: this.score,
     }));
-    this.scoreText.text = this.score.toString();
   }
 
   public startNewGame () {
@@ -107,7 +101,6 @@ export default class Game extends PIXI.Container {
       if (this.mode === 'game') {
         this.player.draw();
         this.apple.draw();
-        this.scoreText.text = this.score.toString();
 
         if (this.player.XX === this.apple.XX && this.player.YY === this.apple.YY) {
           this.updateScore();

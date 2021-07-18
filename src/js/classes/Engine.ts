@@ -38,7 +38,7 @@ export default class Engine {
     this.time = 0;
 
     this.store = configureStore(initialState);
-    this.store.subscribe(() => console.info(this.store.getState()));
+    // this.store.subscribe(() => console.info(this.store.getState()));
     this.keyboard = Keyboard;
     this.controller = Controller;
 
