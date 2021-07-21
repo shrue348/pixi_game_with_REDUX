@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const glob = require('glob');
 const argv = require('yargs').argv;
@@ -110,6 +111,9 @@ const config = {
 			filename: '[name].css',
 			chunkFilename: '[id].css'
 		}),
+		new webpack.ProvidePlugin({
+      PIXI: 'pixi.js'
+    }),
 		...glob.sync('./src/*.html')
 			.map(htmlFile => {
 				return new HtmlWebpackPlugin({

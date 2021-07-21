@@ -21,12 +21,11 @@ export default class GameScene extends Scene {
   constructor (engine: any) {
     super();
     this.engine = engine;
-    this.game = new Game(this.engine);
   }
 
   public init(): void {
     this.engine.store.subscribe(() => this.updateScore(this.engine.store.getState()))
-    this.addChild(this.game);
+    this.addChild(this.engine.game);
 
     this.scoreText = new PIXI.Text('0', {
       fill: '#fff',
@@ -115,6 +114,7 @@ export default class GameScene extends Scene {
   }
 
   public updateScore(state: IInitialState) {
+    console.log('state.game.score', state.game)
     this.scoreText.text = state.game.score.toString();
   }
 
@@ -125,7 +125,7 @@ export default class GameScene extends Scene {
     this.rightBtn.visible = true;
     this.upBtn.visible = true;
     this.downBtn.visible = true;
-    this.game.startNewGame();
+    this.engine.game.startNewGame();
   }
 
   public stop(): void {
@@ -144,7 +144,8 @@ export default class GameScene extends Scene {
     this.rightBtn.visible = false;
     this.upBtn.visible = false;
     this.downBtn.visible = false;
-    this.game.gameOver();
+    console.log(this.engine);
+    // this.engine.game.gameOver();
   }
 
   public update(delta: number): void {

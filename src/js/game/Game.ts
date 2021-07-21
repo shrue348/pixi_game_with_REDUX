@@ -1,19 +1,21 @@
 import * as PIXI from 'pixi.js';
 import Engine from '../classes/Engine';
-import { fastFloor } from '../helper/helper';
 import { updateScore as updateStateScore } from '../store/modules/game/actions';
 import Apple from '../classes/Apple';
 import Brick from '../classes/Brick';
 import Player from '../classes/Player';
+import { levels } from './scenario';
 
 export default class Game extends PIXI.Container {
-  private engine: Engine;
+  public engine: Engine;
   private view: PIXI.Container;
+  private state: IInitialState;
 
   public player: Player;
   public apple: Apple;
-  public bricks: Brick[];
   
+  private currentLevel: number;
+  private currentLevelSettings: IGameLevel;
   private gameSpeed: number;
   private time: number;
   public score: number;
@@ -22,7 +24,7 @@ export default class Game extends PIXI.Container {
   public cellWidth: number;
   public cellHeight: number;
 
-  private mode: 'game' | 'gameover';
+  private mode: 'game' | 'gameover' | 'betweengame';
 
   constructor(
     engine: Engine,
@@ -32,18 +34,22 @@ export default class Game extends PIXI.Container {
     this.engine = engine;
     this.engine.app.ticker.add(this.tick.bind(this));
 
-    this.mode = 'game';
+    this.state = this.engine.store.getState();
+    this.mode = 'gameover';
 
     this.x = 0;
     this.y = 0;
 
-    this.score = 0;
+    this.score = this.state.game.score;
+    this.currentLevel = this.state.game.level;
+    this.currentLevelSettings = levels[this.currentLevel];
+
 
     this.view = new PIXI.Container();
     this.view.x = 0;
     this.view.y = this.engine.app.screen.width * .05 * 2;
-
     this.addChild(this.view);
+
 
     const background = new PIXI.Graphics();
     background.beginFill(0x0b3338);
@@ -64,16 +70,25 @@ export default class Game extends PIXI.Container {
 
     this.view.addChild(this.apple);
     this.view.addChild(this.player);
-    this.view.addChild(new Brick(this));
+
+    for (let i = 0; i < this.currentLevelSettings.countBricks; i++) {
+      this.view.addChild(new Brick(this));
+    }
+
   };
 
-  private updateScore (score?: number) {
+  private updateScore(score?: number) {
     if (score || score === 0) this.score = score;
     else this.score += 1;
 
     this.engine.store.dispatch(updateStateScore({
+      ...this.engine.store.getState().game,
       score: this.score,
     }));
+
+    if (this.score == this.currentLevelSettings.scoresNeed) {
+      this.endLevel();
+    }
   }
 
   public startNewGame () {
@@ -83,10 +98,20 @@ export default class Game extends PIXI.Container {
     this.player.startNewGame();
   }
 
-  public gameOver () {
+  public gameOver() {
     this.mode = 'gameover';
     this.apple.visible = false;
     this.player.gameOver();
+  }
+  
+  public endLevel() {
+    this.gameOver();
+
+    this.engine.store.dispatch(updateStateScore({
+      ...this.engine.store.getState().game,
+      level: this.currentLevel + 1,
+    }));
+    this.currentLevelSettings = levels[this.currentLevel];
   }
 
   tick (delta: number) {
@@ -116,6 +141,8 @@ export default class Game extends PIXI.Container {
           this.engine.scenes.active.gameOver && this.engine.scenes.active.gameOver();
         }
       }
+
+
     }
   }
 };

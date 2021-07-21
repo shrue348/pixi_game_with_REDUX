@@ -30,7 +30,7 @@ export default class MainMenuScene extends Scene {
       y: 550,
       width: 400,
       height: 200,
-      onClick: () => this.scenes.start('game'),
+      onClick: () => this.scenes.start('betweenGame'),
       text: 'Играть',
       callbackOnKeyUp: true,
     });

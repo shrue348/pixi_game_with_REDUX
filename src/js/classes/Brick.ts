@@ -13,12 +13,14 @@ export default class Brick extends PIXI.Container {
     super();
 
     this.game = game;
-    this.XX = 8;
-    this.YY = 8;
+    this.XX = -1;
+    this.YY = -1;
     this.x = 0;
     this.y = 0;
     this.width = this.game.cellWidth;
     this.height = this.game.cellHeight;
+
+    this.game.engine.app.ticker.add(this.draw.bind(this));
 
     const graphics = new PIXI.Graphics();
     graphics.beginFill(0x557655);
@@ -26,12 +28,21 @@ export default class Brick extends PIXI.Container {
     graphics.endFill();
     this.addChild(graphics);
 
+    this.setNewCoords();
     this.draw();
   };
 
   public draw() {
     this.x = this.XX * this.game.cellWidth;
     this.y = this.YY * this.game.cellHeight;
+
+    if (
+      this.game.player.XX == this.XX
+      && this.game.player.YY == this.YY
+    ) {
+      // @ts-ignore
+      this.game.engine.scenes.active.gameOver && this.game.engine.scenes.active.gameOver();
+    }
   }
 
   public setNewCoords() {
