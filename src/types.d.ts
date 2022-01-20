@@ -16,30 +16,30 @@ interface SetConstructor {
 declare var Set: SetConstructor;
 
 declare module PIXI {
-	export interface Container {
-        getChildByPath<T extends PIXI.DisplayObject>(query: string): T | undefined;
-        addGlobalChild(...child: PIXI.DisplayObject[]): PIXI.DisplayObject[]; 
-	}
+  export interface Container {
+    getChildByPath<T extends PIXI.DisplayObject>(query: string): T | undefined;
+    addGlobalChild(...child: PIXI.DisplayObject[]): PIXI.DisplayObject[];
+  }
 }
 
 declare module PIXI {
-	export interface DisplayObject {
-		replaceWithTransform(from:DisplayObject): void
-	}
+  export interface DisplayObject {
+    replaceWithTransform(from: DisplayObject): void
+  }
 }
 
 declare module PIXI {
-	export interface Loader {
-		filter(func: (v: PIXI.LoaderResource) => boolean): PIXI.LoaderResource[];
-		loadAsync() : Promise<PIXI.IResourceDictionary>;
-	}
+  export interface Loader {
+    filter(func: (v: PIXI.LoaderResource) => boolean): PIXI.LoaderResource[];
+    loadAsync(): Promise<PIXI.IResourceDictionary>;
+  }
 
 }
 
 declare module PIXI.utils {
-	export interface EventEmitter {
-		onceAsynce(event: string): Promise<any>;
-	}
+  export interface EventEmitter {
+    onceAsynce(event: string): Promise<any>;
+  }
 }
 
 interface Window {
@@ -49,7 +49,7 @@ interface Window {
 interface IGameState {
   score: number;
   level: number;
-} 
+}
 
 interface IInitialState {
   game: IGameState,

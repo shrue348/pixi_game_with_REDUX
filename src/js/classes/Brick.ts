@@ -37,9 +37,11 @@ export default class Brick extends PIXI.Container {
     this.y = this.YY * this.game.cellHeight;
 
     if (
-      this.game.player.XX == this.XX
+      this.visible
+      && this.game.player.XX == this.XX
       && this.game.player.YY == this.YY
     ) {
+      console.log('brick game over')
       // @ts-ignore
       this.game.engine.scenes.active.gameOver && this.game.engine.scenes.active.gameOver();
     }

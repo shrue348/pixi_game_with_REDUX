@@ -82,11 +82,11 @@ const config = {
 				}
 			},
 		}, {
-			test: /sprites[\\\/].+\.(jpg|png|json)$/i,
+			test: /sprites[\\\/].+\.(jpg|png|json|atlas)$/i,
 			use: {
 				loader: 'file-loader',
 				options: {
-					name: 'sprites/[name][hash].[ext]'
+					name: 'sprites/[name].[ext]'
 				}
 			},
 		}, {
@@ -94,7 +94,7 @@ const config = {
 			use: [{
 				loader: 'file-loader',
 				options: {
-					name: 'shaders/[name].[ext]'
+					name: 'shaders/[path][name].[ext]'
 				}
 			}
 			],

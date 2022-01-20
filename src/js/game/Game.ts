@@ -13,7 +13,8 @@ export default class Game extends PIXI.Container {
 
   public player: Player;
   public apple: Apple;
-  
+  public bricks: Brick[];
+
   private currentLevel: number;
   private currentLevelSettings: IGameLevel;
   private gameSpeed: number;
@@ -67,13 +68,10 @@ export default class Game extends PIXI.Container {
 
     this.apple = new Apple(this);
     this.player = new Player(this);
+    this.bricks = [];
 
     this.view.addChild(this.apple);
     this.view.addChild(this.player);
-
-    for (let i = 0; i < this.currentLevelSettings.countBricks; i++) {
-      this.view.addChild(new Brick(this));
-    }
 
   };
 
@@ -91,21 +89,34 @@ export default class Game extends PIXI.Container {
     }
   }
 
-  public startNewGame () {
-    this.mode = 'game';
-    this.apple.visible = true;
+  public startNewGame() {
+    for (let i = 0; i < this.currentLevelSettings.countBricks; i++) {
+      this.bricks.push(new Brick(this));
+      this.view.addChild(this.bricks[i]);
+    }
+  
     this.updateScore(0);
+    this.startLevel();
+  }
+
+  public startLevel() {
+    this.mode = 'game';
+    this.view.children.forEach(el => el.visible = true);
     this.player.startNewGame();
   }
 
   public gameOver() {
-    this.mode = 'gameover';
-    this.apple.visible = false;
     this.player.gameOver();
+    this.mode = 'gameover';
+
+
   }
-  
+
   public endLevel() {
-    this.gameOver();
+    this.view.children.length = 3;
+    this.mode = 'betweengame';
+
+    this.view.children.forEach(el => el.visible = false);
 
     this.engine.store.dispatch(updateStateScore({
       ...this.engine.store.getState().game,
@@ -114,7 +125,7 @@ export default class Game extends PIXI.Container {
     this.currentLevelSettings = levels[this.currentLevel];
   }
 
-  tick (delta: number) {
+  tick(delta: number) {
     if (this.engine.controller.up) this.player.setDirection('up');
     if (this.engine.controller.down) this.player.setDirection('down');
     if (this.engine.controller.left) this.player.setDirection('left');
@@ -136,13 +147,12 @@ export default class Game extends PIXI.Container {
             this.player.XX === el[0] && this.player.YY === el[1]
           ))
           && this.player.tailCoords.length >= 3
-        ){
+        ) {
+          console.log('game game over')
           // @ts-ignore
           this.engine.scenes.active.gameOver && this.engine.scenes.active.gameOver();
         }
       }
-
-
     }
   }
 };

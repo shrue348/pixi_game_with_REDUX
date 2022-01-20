@@ -55,7 +55,7 @@ export default class Engine {
       .add('button_click_small', '../images/button_click_small.png')
       .add('button_click_round', '../images/button_click_round.png')
 
-      .add('bunny', '../sprites/bunny/bunny.json')
+      // .add('bunny', '../sprites/bunny/bunny.json')
       .add('goblins', '../sprites/goblins/goblins.json')
 
       .add('shader', '../shaders/first.frag');
@@ -74,7 +74,6 @@ export default class Engine {
   }
 
   afterLoad(loader: PIXI.Loader, res: any): void {
-    console.log('res', res);
     this.addScenes();
     // this.app.ticker.speed = 2;
     this.app.ticker.add(this.tick.bind(this));
@@ -98,35 +97,29 @@ export default class Engine {
 
 
 
+    // console.log('res :>> ', res);
+    console.log('this.app.loader.resourc', res['goblins'].spineData);
 
 
 
+    const spine = new Spine(this.app.loader.resources['goblins'].spineData);
 
-    console.log('this.app.loader.resourc', this.app.loader.resources['goblins'].spineData);
+    spine.skeleton.setSkinByName('goblingirl');
+    spine.skeleton.setSlotsToSetupPose();
 
-    // const spine = new Spine(this.app.loader.resources['bunny'].spineData);
+    // set the position
+    // @ts-ignore
+    spine.x = 400;
+    // @ts-ignore
+    spine.y = 600;
 
-    // spine.skeleton.setSkinByName('Fall.png');
-    // spine.skeleton.setSlotsToSetupPose();
+    // spine.scale.set(1.5);
 
-    // // set the position
-    // // spine.x = 400;
-    // // spine.y = 600;
+    // play animation
+    spine.state.setAnimation(0, 'walk', true);
 
-    // // spine.scale.set(1.5);
-
-    // // play animation
-    // spine.state.setAnimation(0, 'walk', true);
-
-    // // @ts-ignore
-    // this.app.stage.addChild(spine);
-
-
-
-    this.app.start();
-
-
-
+    // @ts-ignore
+    this.app.stage.addChild(spine);
 
 
 

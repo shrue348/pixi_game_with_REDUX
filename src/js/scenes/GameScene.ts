@@ -18,7 +18,7 @@ export default class GameScene extends Scene {
 
   public gameOVer: () => void;
 
-  constructor (engine: any) {
+  constructor(engine: any) {
     super();
     this.engine = engine;
   }
@@ -133,24 +133,26 @@ export default class GameScene extends Scene {
   }
 
   public back() {
+    // @ts-ignore
+    // this.engine.scenes.active.gameOver && this.engine.scenes.active.gameOver();
     this.gameOver();
     this.scenes.start('mainMenu');
   }
 
   public gameOver() {
+    console.log('scene game over')
     this.restartBtn.visible = true;
     this.backBtn.visible = false;
     this.leftBtn.visible = false;
     this.rightBtn.visible = false;
     this.upBtn.visible = false;
     this.downBtn.visible = false;
-    console.log(this.engine);
-    // this.engine.game.gameOver();
+    this.engine.game.gameOver();
   }
 
   public update(delta: number): void {
 
 
-    
+
   }
 }

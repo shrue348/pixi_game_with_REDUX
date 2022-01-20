@@ -88,11 +88,13 @@ export default class Player extends PIXI.Container {
   }
 
   public gameOver() {
-    this.visible = false;
+    console.log('game over');
+    
     this.XX = 0;
     this.YY = 0;
     this.x = 0;
     this.y = 0;
+    this.visible = false;
     this.tailCoords.length = 0;
     this.setDirection('');
   }
